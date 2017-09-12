@@ -1,0 +1,122 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+
+    //=====依赖库 必要 ====//
+    compile 'com.alibaba:fastjson:1.1.45.android'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile(name: 'tuyasmart-1.5.11', ext: 'aar')
+    //=====依赖库====//
+
+//    compile 'com.android.support:appcompat-v7:25.1.0@aar'
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+//    compile 'com.android.support:support-v4:25.1.0@aar'
+//    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.wnafee:vector-compat:1.0.5'
+    // 影响到了v7版本
+    compile 'com.kyleduo.switchbutton:library:1.4.2'
+
+//    compile ('com.kyleduo.switchbutton:library:1.4.2'){
+//        exclude 'com.android.support:appcompat-v7:23.1.0'
+//    }
+
+
+    compile 'com.didi.virtualapk:core:0.9.0'
+
+}
+
+android {
+
+//    useLibrary 'org.apache.http.legacy'
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+        incremental false
+    }
+
+    compileSdkVersion 23
+    buildToolsVersion '24.0.1'
+
+    defaultConfig {
+        applicationId "com.tuya.smart.android.myapk" // com.tuya.smart.android.myapk  com.nextapp.mytuyatest
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0.0"
+        multiDexEnabled true
+        generatedDensities = []
+//        ndk {
+//            abiFilters "armeabi-v7a","x86"
+//        }
+    }
+    lintOptions {
+        abortOnError false
+        disable 'InvalidPackage'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug{
+
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/INDEX.LIST'
+//        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+}
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+
+
+//apply plugin: 'com.didi.virtualapk.plugin'
+
+//virtualApk {
+//    // 插件资源表中的packageId，需要确保不同插件有不同的packageId. 0x6f
+//    packageId = 0x6e // the package id of Resources.
+//    targetHost = 'D:\\MyAndroid\\MultipleServer\\app'   // the path of application module in host project. D\:\\Users\\wondercupid\\AppData\\Local\\Android\\sdk
+//// 宿主工程application模块的路径，插件的构建需要依赖这个路径
+////    targetHost = 'D:\\myNewDemo\\VirtualAPK-master\\app'
+//    //默认为true，如果插件有引用宿主的类，那么这个选项可以使得插件和宿主保持混淆一致
+//    applyHostMapping = true //optional, default value: true.
+//}
